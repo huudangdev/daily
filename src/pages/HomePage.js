@@ -14,12 +14,14 @@ class HomePage extends Component {
     super(props)
     this.state = {
       isFlipped: initialFlipping,
-      mockData: []
+      mockData: [],
+      fetched: []
     }
     this.handleClick = this.handleClick.bind(this)
   }
 
   initMockData () {
+    console.log(this.state.fetched)
     const numRan = []
     let i = 0
     while (i < 5) {
@@ -32,10 +34,19 @@ class HomePage extends Component {
         }
       }
       if (flag === 0) {
+        for (let j = 0; j < this.state.fetched.length; j++) {
+          if (this.state.fetched[j] === tmp) {
+            flag = 1
+            break
+          }
+        }
+      }
+      if (flag === 0) {
         numRan.push(tmp)
         i++
       }
     }
+    this.setState({ fetched: [...this.state.fetched, ...numRan] })
     const tmp = numRan.map((value) => {
       return data[value]
     })
